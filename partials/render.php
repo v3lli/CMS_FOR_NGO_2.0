@@ -146,7 +146,7 @@
      $res = json_decode(curl_exec($ch));
      $news = $res["title"];
      var_dump($res);
-     echo $news;
+     var_dump($news);
      curl_close($ch);
  }
 
