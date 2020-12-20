@@ -141,12 +141,13 @@
      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
      curl_setopt($ch, CURLOPT_HTTPHEADER, [
          'Access-Control-Allow-Origin: *',
-         'Content-Type: application/x-www-form-urlencoded'
+         'Content-Type: application/json'
      ]);
      $res = json_decode(curl_exec($ch));
-     $news = $res["title"];
-     var_dump($res);
-     var_dump($news);
+//     $news = $res[`id`];
+//     var_dump($res);
+     var_dump( $res[0]->title);
+
      curl_close($ch);
  }
 
