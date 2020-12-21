@@ -1,4 +1,5 @@
 <?php
+include '../controllas/content.con.php';
  function render_header(){
      session_start();
      if(isset($_SESSION['firstname'])){
@@ -123,32 +124,21 @@
  }
 
  function render_banner(){
-     echo "jumbo goes here \n";
-//     $url = 'http://localhost:8888/rviii/api/post/read.php';
-//     $options = [
-//         'http'=>[
-//             'method' => 'GET',
-//             'header' => "Content-type: application/json\r\n"
-//         ],
-//     ];
-//     $context = stream_context_create($options);
-//     $res = file_get_contents($url,false, $context);
-//     $beans = json_decode($res);
-//     $beans["body"];
-     $ch = curl_init();
-     $url = 'http://localhost:8888/rviii/api/post/read.php';
-     curl_setopt($ch, CURLOPT_URL, $url);
-     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-         'Access-Control-Allow-Origin: *',
-         'Content-Type: application/json'
-     ]);
-     $res = json_decode(curl_exec($ch));
-//     $news = $res[`id`];
-//     var_dump($res);
-     var_dump( $res[0]->title);
+    $banner = get_banner_content();
+     echo '<section id="" class="carousel slide subpage contact-page" data-ride="carousel" data-interval ="6500" >
+                <div class="carousel-inner w-100">
+                  <div class="carousel-item active w-100">
+                    <img class="d-block w-100 landing-contact" src="' .$banner[0]->spread . '" alt="First slide">
+                  </div>
+                  <div class="carousel-item w-100">
+                    <img class="d-block w-100 landing-contact" src="' .$banner[0]->spread . '" alt="Second slide">
+                  </div>
+                  <div class="carousel-item landing-contact">
+                    <img class="d-block w-100 landing-contact" src="' .$banner[0]->spread . '" alt="Third slide">
+                  </div>
+                </div>
+            </section>';
 
-     curl_close($ch);
  }
 
  function render_media(){
