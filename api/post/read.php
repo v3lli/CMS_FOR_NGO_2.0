@@ -34,6 +34,8 @@ if ($number > 0){
             'description' => $description,
             'thumbnail' => $thumbnail,
             'spread' => $spread,
+            'pc' => $pc,
+            'isvideo' => $isvideo,
             'created_at' => $created_at
         );
         array_push($post_list, $postListItem);

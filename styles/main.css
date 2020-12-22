@@ -42,8 +42,15 @@ html{
     color:#f4f4f4;
 }
 
-.darktron:hover{
+.landing{
+    position: relative;
+}
+.darktron:hover, .overlay:hover{
     background-color: rgba(0, 0, 0, 0.192);
+}
+.overlay{
+    position: absolute;
+    z-index: 100;
 }
 /*
 .content{

@@ -15,6 +15,8 @@ class Post
     public $description;
     public $thumbnail;
     public $spread;
+    public $pc;
+    public $isvideo;
     public $created_at;
 
     public function __construct($db){
@@ -31,7 +33,9 @@ class Post
                                 p.subtitle, 
                                 p.description, 
                                 p.thumbnail, 
-                                p.spread, 
+                                p.spread,
+                                p.pc,
+                                p.isvideo, 
                                 p.created_at
                                 FROM ' . $this->table . ' p
                                 LEFT JOIN
@@ -58,6 +62,8 @@ class Post
                                 p.description, 
                                 p.thumbnail, 
                                 p.spread, 
+                                p.pc,
+                                p.isvideo,
                                 p.created_at
                                 FROM ' . $this->table . ' p
                                 LEFT JOIN
@@ -85,6 +91,8 @@ class Post
         $this->description = $row['description'];
         $this->thumbnail = $row['thumbnail'];
         $this->spread = $row['spread'];
+        $this->pc = $row['pc'];
+        $this->isvideo = $row['isvideo'];
         $this->created_at = $row['created_at'];
 
     }
@@ -100,7 +108,9 @@ class Post
             subtitle = :subtitle, 
             description = :description, 
             thumbnail = :thumbnail, 
-            spread = :spread';
+            spread = :spread,
+            pc = :pc,
+            isvideo = :isvideo';
 
         // Prepare statement
         $stmt = $this->conn->prepare($query);
@@ -124,7 +134,8 @@ class Post
         $stmt->bindParam(':description', $this->description);
         $stmt->bindParam(':thumbnail', $this->thumbnail);
         $stmt->bindParam(':spread', $this->spread);
-
+        $stmt->bindParam(':pc', $this->pc);
+        $stmt->bindParam(':isvideo', $this->isvideo);
 
         // Execute query
         if($stmt->execute()) {

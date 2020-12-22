@@ -1,5 +1,6 @@
 <?php
 include '../controllas/content.con.php';
+include '../controllas/art.con.php';
  function render_header(){
      session_start();
      if(isset($_SESSION['firstname'])){
@@ -123,22 +124,20 @@ include '../controllas/content.con.php';
      }
  }
 
- function render_banner(){
+ function render_banner()
+ {
     $banner = get_banner_content();
-     echo '<section id="" class="carousel slide subpage contact-page" data-ride="carousel" data-interval ="6500" >
-                <div class="carousel-inner w-100">
-                  <div class="carousel-item active w-100">
-                    <img class="d-block w-100 landing-contact" src="' .$banner[0]->spread . '" alt="First slide">
-                  </div>
-                  <div class="carousel-item w-100">
-                    <img class="d-block w-100 landing-contact" src="' .$banner[0]->spread . '" alt="Second slide">
-                  </div>
-                  <div class="carousel-item landing-contact">
-                    <img class="d-block w-100 landing-contact" src="' .$banner[0]->spread . '" alt="Third slide">
-                  </div>
-                </div>
-            </section>';
-
+     echo '<div 
+            style="background-image: url('. $banner[0]->spread . ');background-repeat:no-repeat; background-position: center center"
+            class="d-flex justify-self-center jumbotron-fluid jumbo align-content-center">
+    <div class ="d-flex-inline text-center align-content-center darktron">
+        <h1 class="text-light animated fadeInUp">' . $banner[0]->title . '</h1> 
+        <h5 class="text-light animated fadeInUp">' .$banner[0]->subtitle. '</h5>
+        <p style="font-size: 0.8em" class = "text-light animated fadeIn">by ' . $banner[0]->author . ' </p>
+        <a class = "animated fadeInLeft btn btn-outline-info" href="article.php?id=' . $banner[0]->id . '">Read on..</a> 
+        </p>
+    </div>
+</div>';
  }
 
  function render_media(){
@@ -146,8 +145,8 @@ include '../controllas/content.con.php';
  }
 
  function render_footer(){
-     echo'<div
-class="footer">
+     echo'
+<div class="footer">
           <div id="accordion">
             <div class="card">
               <div class="card-header">
@@ -226,6 +225,31 @@ class="footer">
 </html>';
  }
 
+ function render_article(){
+     $article = get_article($_GET["id"]);
+     echo '
+<div class="container">
+        <header style="margin-top: 2rem;" class ="container">
+            <h3 style ="margin-left: 1rem; font-size: 140%" >' . $article->title . '</h3>
+            <p style ="margin-left: 1rem; font-size: 80%">by ' . $article->author . '</p>
+        </header>
+        <article class="mx-auto col-sm-12">
+            <figure class="animated fadeIn mx-auto col-sm-10">
+                <img class="mx-auto col-sm-12" src="' . $article->spread . '">
+                <figcaption class ="py-2" style ="margin-left: 1rem; font-size: 80%"><em>Photo Credit: insery here</em></figcaption>
+            </figure>
+            <p class="font-weight-light col-sm-10"style="margin: auto; margin-top: 2rem; font-size: 100%; font-family: \'Gupter\', serif;">
+                ' . $article->body . '
+            </p>
+            <hr style="margin:auto;margin-top:3rem;" class="w-75">
+        </article>';
+        render_comments();
+}
+
+function render_comments(){
+     echo '</div>';
+
+}
  function render_body(){
     render_banner();
     render_media();
