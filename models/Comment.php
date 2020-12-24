@@ -6,35 +6,46 @@ class Comment
 
     private $conn;
     private $table = "comment_test";
+
     public $id;
-    public $user_name;
+    public $user_handle;
     public $user_id;
     public $art_id;
     public $body;
     public $create_date;
 
 
-    public function __construct($db){
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    public function read(){
-        $query = 'SELECT u.name as user_name,
+    public function read()
+    {
+        $query = 'SELECT u.handle as user_handle,
                     c.id,
                     c.user_id,
                     c.art_id,
                     c.body,
                     c.create_date
-                   FROM '. $this->table .' c
+                   FROM ' . $this->table . ' c
                    LEFT JOIN
-                    user_test u ON c.user_id = u.id
+                    users_test u ON c.user_id = u.id
+                    WHERE 
+                    c.art_id = ?
                     ORDER BY
                     created_at ASC';
         $stmt = $this->conn->prepare($query);
+        //bind
+        $stmt->bindParam(1,$this->art_id);
+        //execute
         $stmt->execute();
+
+        return $stmt;
     }
 
-    public function create() {
+    public function create()
+    {
         // Create query
         $query = 'INSERT INTO '
             . $this->table .
@@ -56,7 +67,8 @@ class Comment
         $stmt->bindParam(':art_id', $this->art_id);
 
         // Execute query
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return true;
         }
+    }
 }
