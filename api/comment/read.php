@@ -31,7 +31,6 @@ if ($number > 0){
         $commentListItem = array(
             'id' => $id,
             'user_id' => $user_id,
-            'art_id' => $art_id,
             'body' => $body,
             'created_at' => $created_at
         );
