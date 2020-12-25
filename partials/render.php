@@ -283,18 +283,22 @@ function render_comments(){
         }
         else{
             echo '<h3>Sign in to leave a comment..</h3>
-                
-                <h3>Sign in to leave a comment..</h3>
                 <form class = "form-inline" action="controlla/login.con.php" method = "POST">
-                <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = " form-control form-control-sm" type = "hidden" placeholder = "Username" name = "url_log" value = " ' .$_SERVER["REQUEST_URI"] . '/>  
-                      <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = " form-control form-control-sm" type = "name" placeholder = "Username or email" name = "uname_log" required/>
+                <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = " form-control form-control-sm" type = "hidden" placeholder = "Username" name = "url_log" value = " ' .$_SERVER["REQUEST_URI"] . '"/>  
+                      <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = " form-control form-control-sm" type = "name" placeholder = "Username" name = "uname_log" required/>
                       <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = "form-control form-control-sm" type = "password" placeholder = "Password" name = "pw_log" required/>
                       <button style = "height:1.5rem; width: 3rem; font-size:0.6rem; margin-left:0.2rem;" class = "form-control form-control-sm" type = "submit" name = "submit_log">LOG IN</button>
-                    </form><br>
+                    </form>
                     <h6>Or <a style = "align-self: center; height:3rem; width: 3rem; font-size:1.5rem; margin-left:8px;"href = "signup.php">Sign up</a> if you havent done so already..</h6>
                     </div>
 </div>';
         }}
+
+
+
+
+
+
 
  function render_body(){
     render_banner();
