@@ -15,9 +15,10 @@ class Comment
     public $create_date;
 
 
-    public function __construct($db)
+    public function __construct($db, $art)
     {
         $this->conn = $db;
+        $this->art_id = $art;
     }
 
     public function read()
@@ -32,12 +33,11 @@ class Comment
                    LEFT JOIN
                     users_test u ON c.user_id = u.id
                     WHERE 
-                    c.art_id = ?
+                    c.art_id = ' . $this->art_id . '
                     ORDER BY
                     created_at ASC';
         $stmt = $this->conn->prepare($query);
-        //bind
-        $stmt->bindParam(1,$this->art_id);
+
         //execute
         $stmt->execute();
 

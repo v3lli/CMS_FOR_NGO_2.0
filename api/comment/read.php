@@ -12,11 +12,11 @@ $database = new Database();
 $db = $database->connect();
 
 //comment instance
-$comment = new Comment($db);
+
 
 // Get ID
-$comment->art_id = isset($_GET['id']) ? $_GET['id'] : die();
-
+$art_id = isset($_GET['id']) ? $_GET['id'] : die();
+$comment = new Comment($db, $art_id);
 //query
 $res = $comment->read();
 
@@ -30,17 +30,19 @@ if ($number > 0){
         extract($row);
         $commentListItem = array(
             'id' => $id,
+            'user_handle' => $user_handle,
             'user_id' => $user_id,
+            'art_id' => $art_id,
             'body' => $body,
-            'created_at' => $created_at
+            'create_date' => $create_date
         );
         array_push($comment_list, $commentListItem);
-        var_dump( json_encode($comment_list));
+        echo(json_encode($comment_list));
     }
 }else{
-    return json_encode(
-        array('message' => 'No Comments Found')
-    );
+    echo (json_encode(
+        array('message' => 'No Comment')
+    ));
 }
 
 
