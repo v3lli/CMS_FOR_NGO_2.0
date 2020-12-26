@@ -250,55 +250,57 @@ function render_comments(){
      // comment api call
     $yarns = get_comments($_GET['id']);
      echo '<div id = "comment" class="well container">
-        <h4 style ="opacity: 0.45;" class="my-5" >C O M M E N T S..</h4>';
-        foreach ($yarns as $yarn){
-            echo '<header>
-            <p><strong>' . $yarn->user_handle . '</strong></p>
-            </header>
-            <p>' . $yarn->body . '</p>
-            <small>' . $yarn->create_date . '</small>
-            <hr>
-            </div>';
+                <h4 style ="opacity: 0.45;" class="my-5" >C O M M E N T S..</h4>';
+     //looping render
+            foreach ($yarns as $yarn){
+                echo '
+               <header>
+                    <p><strong>' . $yarn->user_handle . '</strong></p>
+               </header>
+               <p>' . $yarn->body . '
+               </p>
+               <small>' . $yarn->create_date . '</small>
+               <hr>
+           </div>';
+
         }
+
         if (isset($_SESSION['user_handle'])){
             echo '<div id = "commentform" class= "py-5">
-<form  style ="opacity: 0.85" method="POST" action="controlla/comment.con.php" class="w-100">
-                <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = "form-control form-control-sm" type = "hidden" placeholder = "Username" name = "url_comment" value ="<?php echo $_SERVER[\\\'REQUEST_URI\\\']?>"/>\';
-                 <div class="form-group">
-                    <input type="hidden" name="uid" value="<?php echo $userid;?>" class="w-50" required/>
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" name="author" value="<?php echo $uzaname;?>" class="w-50" required/>
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" name="articleid" value="<?php echo $payload;?>" class="w-50" required/>
-                    </div>
-                    <div class="form-group">
-                        <label for ="comment">' . $_SESSION['user_handle'] . '</label>
-                        <textarea type="text" name="comment" class="w-100" rows="3"
-                        placeholder="leave a comment.." required></textarea>
-                    </div>
-                    <button type = "submit" name= "submit_comment">Comment.</button>
-                </form>';
+                    <form  style ="opacity: 0.85" method="POST" action="controlla/comment.con.php" class="w-100">
+                        <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = "form-control form-control-sm" type = "hidden" placeholder = "Username" name = "url_comment" value ="<?php echo $_SERVER[\\\'REQUEST_URI\\\']?>"/>\';
+                         <div class="form-group">
+                            <input type="hidden" name="uid" value="<?php echo $userid;?>" class="w-50" required/>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="author" value="<?php echo $uzaname;?>" class="w-50" required/>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="articleid" value="<?php echo $payload;?>" class="w-50" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for ="comment">' . $_SESSION['user_handle'] . '</label>
+                                <textarea name="comment" class="w-100" rows="3"
+                                placeholder="leave a comment.." required></textarea>
+                            </div>
+                            <button type = "submit" name= "submit_comment">Comment.</button>
+                    </form>
+                    </div>';
         }
         else{
-            echo '<h3>Sign in to leave a comment..</h3>
-                <form class = "form-inline" action="controlla/login.con.php" method = "POST">
-                <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = " form-control form-control-sm" type = "hidden" placeholder = "Username" name = "url_log" value = " ' .$_SERVER["REQUEST_URI"] . '"/>  
-                      <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = " form-control form-control-sm" type = "name" placeholder = "Username" name = "uname_log" required/>
-                      <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = "form-control form-control-sm" type = "password" placeholder = "Password" name = "pw_log" required/>
-                      <button style = "height:1.5rem; width: 3rem; font-size:0.6rem; margin-left:0.2rem;" class = "form-control form-control-sm" type = "submit" name = "submit_log">LOG IN</button>
+            echo '
+                <div class="py-3">
+                    <h3>Sign in to leave a comment..</h3>
+                    <form class = "form-inline" action="controlla/login.con.php" method = "POST">
+                    <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = " form-control form-control-sm" type = "hidden" placeholder = "Username" name = "url_log" value = " ' .$_SERVER["REQUEST_URI"] . '"/>  
+                          <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = " form-control form-control-sm" type = "name" placeholder = "Username" name = "uname_log" required/>
+                          <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = "form-control form-control-sm" type = "password" placeholder = "Password" name = "pw_log" required/>
+                          <button style = "height:1.5rem; width: 3rem; font-size:0.6rem; margin-left:0.2rem;" class = "form-control form-control-sm" type = "submit" name = "submit_log">LOG IN</button>
                     </form>
-                    <h6>Or <a style = "align-self: center; height:3rem; width: 3rem; font-size:1.5rem; margin-left:8px;"href = "signup.php">Sign up</a> if you havent done so already..</h6>
-                    </div>
-</div>';
+                    <h6>Or <a style = "align-self: center; height:3rem; width: 3rem; font-size:1.5rem; margin-left:8px;"href = "loginform.php">Sign up</a> if you havent done so already..</h6>
+            </div>
+         </div>';
         }}
-
-
-
-
-
-
 
  function render_body(){
     render_banner();
