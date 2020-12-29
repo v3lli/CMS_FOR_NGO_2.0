@@ -21,12 +21,12 @@
             <div class="slider-tab"></div>
         </div>
         <div class="form-inner">
-            <form action="#" class="login">
+            <form action="../controllas/login.con.php" class="login">
                 <div class="field">
-                    <input type="text" placeholder="Email Address" required>
+                    <input type="text" name="email_log" placeholder="Email Address" required>
                 </div>
                 <div class="field">
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" name="pw_log" placeholder="Password" required>
                 </div>
                 <div class="pass-link"><a href="#">Forgot password?</a></div>
                 <div class="field btn">
@@ -35,18 +35,18 @@
                 </div>
                 <div class="signup-link">Not a member? <a href="">Signup now</a></div>
             </form>
-            <form action="#" class="signup">
+            <form action="../controllas/signup.con.php" class="signup" method="post">
                 <div class="field">
-                    <input type="text" placeholder="Email Address" required>
+                    <input type="text" name="email_new" placeholder="Email Address" required>
                 </div>
                 <div class="field">
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" name="pw_new" placeholder="Password" required>
                 </div>
                 <div class="field">
-                    <input type="password" placeholder="Confirm password" required>
+                    <input type="password" name="cpw_new" placeholder="Confirm password" required>
                 </div>
                 <div class="field">
-                    <input type="text" placeholder="Prefered User Handle" required>
+                    <input type="text" name="handle_new" placeholder="Prefered User Handle" required>
                 </div>
                 <div class="field btn">
                     <div class="btn-layer"></div>

@@ -20,11 +20,7 @@ class User{
 
     function create(){
         $query = 'INSERT INTO ' . $this->table . ' 
-                    SET  first_name = :first_name,
-                    last_name = :last_name, 
-                    gender = :gender,
-                    password = :password, 
-                    mobile = :mobile,
+                    SET  password = :password, 
                     handle = :handle, 
                     email = :email';
 
@@ -59,7 +55,6 @@ class User{
         // Clean data
         $this->first_name = htmlspecialchars(strip_tags($this->first_name));
         $this->last_name = htmlspecialchars(strip_tags($this->last_name));
-        $this->sex = htmlspecialchars(strip_tags($this->sex));
         $this->handle = htmlspecialchars(strip_tags($this->handle));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->password = htmlspecialchars(strip_tags($this->password));
@@ -86,6 +81,39 @@ class User{
         }
         printf("Error %s.\n", $stm->error);
         return false;
+    }
+
+    public function get_user_by_pw() {
+        // Create query
+        $query = 'SELECT u.id, 
+                        u.first_name, 
+                        u.last_name, 
+                        u.email, 
+                        u.mobile,
+                        u.handle, 
+                        u.created_at
+                                    FROM ' . $this->table . ' u
+                                    WHERE
+                                      u.password = ?
+                                    LIMIT 0,1';
+
+        // Prepare statement
+        $stmt = $this->conn->prepare($query);
+
+        // Bind ID
+        $stmt->bindParam(1, $this->id);
+
+        // Execute query
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Set properties
+        $this->title = $row['title'];
+        $this->body = $row['body'];
+        $this->author = $row['author'];
+        $this->category_id = $row['category_id'];
+        $this->category_name = $row['category_name'];
     }
 
     function get_users(){
