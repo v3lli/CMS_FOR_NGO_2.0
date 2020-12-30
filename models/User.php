@@ -19,13 +19,14 @@ class User{
     }
 
     function create(){
-        $query = 'INSERT INTO ' . $this->table . ' 
-                    SET  password = :password, 
-                    handle = :handle, 
-                    email = :email';
+        $query = 'INSERT INTO ' . $this->table . ' SET email = :email, handle = :handle, password = :password';
 
-        $stmt = $this->prep_clean_bind($query);
+        $stmt = $this->prep_clean($query);
 
+        // Bind data
+        $stmt->bindParam(':handle', $this->handle);
+        $stmt->bindParam(':password', $this->password);
+        $stmt->bindParam(':email', $this->email);
         // Execute query
         if($stmt->execute()) {
             return true;
@@ -49,28 +50,19 @@ class User{
 //        $this->run($stmt);
 //    }
 
-    function prep_clean_bind($ask){
-        $stmt = $this->conn->prepare($ask);
+    function prep_clean($ask){
+        $stm = $this->conn->prepare($ask);
 
         // Clean data
         $this->first_name = htmlspecialchars(strip_tags($this->first_name));
         $this->last_name = htmlspecialchars(strip_tags($this->last_name));
+        $this->mobile = htmlspecialchars(strip_tags($this->mobile));
+        $this->gender = htmlspecialchars(strip_tags($this->gender));
         $this->handle = htmlspecialchars(strip_tags($this->handle));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->password = htmlspecialchars(strip_tags($this->password));
-        $this->mobile = htmlspecialchars(strip_tags($this->mobile));
 
-
-        // Bind data
-        $stmt->bindParam(':first_name', $this->first_name);
-        $stmt->bindParam(':last_name', $this->last_name);
-        $stmt->bindParam(':gender', $this->gender);
-        $stmt->bindParam(':handle', $this->handle);
-        $stmt->bindParam(':password', $this->password);
-        $stmt->bindParam(':email', $this->email);
-        $stmt->bindParam(':mobile', $this->mobile);
-
-        return $stmt;
+        return $stm;
 
     }
 

@@ -24,8 +24,7 @@ $user->email = $data->email;
 $user->mobile = $data->mobile;
 $user->handle = $data->handle;
 $user->password = $data->password;
-$post->created_at = $data->created_at;
-
+$user->created_at = $data->created_at;
 // Create post
 if($user->create()) {
     return json_encode(
