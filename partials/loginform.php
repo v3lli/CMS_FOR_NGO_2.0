@@ -21,20 +21,21 @@
             <div class="slider-tab"></div>
         </div>
         <div class="form-inner">
-            <form action="../controllas/login.con.php" class="login">
-                <div class="field">
-                    <input type="text" name="email_log" placeholder="Email Address" required>
-                </div>
-                <div class="field">
-                    <input type="password" name="pw_log" placeholder="Password" required>
-                </div>
-                <div class="pass-link"><a href="#">Forgot password?</a></div>
-                <div class="field btn">
-                    <div class="btn-layer"></div>
-                    <input type="submit" value="Login">
-                </div>
-                <div class="signup-link">Not a member? <a href="">Signup now</a></div>
-            </form>
+            <div class="form-inner">
+                <form action="../controllas/login.con.php" class="login">
+                    <div class="field">
+                        <input name="email_log" type="text" placeholder="Email Address" required>
+                    </div>
+                    <div class="field">
+                        <input name="pass_log" type="password" placeholder="Password" required>
+                    </div>
+                    <div class="pass-link"><a href="#">Forgot password?</a></div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Login">
+                    </div>
+                    <div class="signup-link">Not a member? <a href="">Signup now</a></div>
+                </form>
             <form action="../controllas/signup.con.php" class="signup" method="post">
                 <div class="field">
                     <input type="text" name="email_new" placeholder="Email Address" required>

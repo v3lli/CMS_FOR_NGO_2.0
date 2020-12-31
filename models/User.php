@@ -12,6 +12,7 @@ class User{
     public $email;
     public $handle;
     public $password;
+    public $isadmin;
     public $created_at;
 
     public function __construct($db){
@@ -37,18 +38,13 @@ class User{
         return false;
     }
 
-//    function update_user(){
-//        $query = 'UPDATE ' . $this->table . '
-//        SET first_name = :first_name,
-//        last_name = :last_name,
-//        gender = :sex,
-//        mobile = :mobile,
-//        email = :email';
-//        //prepare via custom helper function
-//        $stmt = $this->prep_clean_bind($query);
-//        //run via custom helper function
-//        $this->run($stmt);
-//    }
+    function update_user(){
+        $query = 'UPDATE ' . $this->table . ' SET first_name = :first_name, last_name = :last_name, gender = :gender, mobile = :mobile, email = :email';
+//        prepare via custom helper function
+        $stmt = $this->prep_clean($query);
+        //run via custom helper function
+        $this->run($stmt);
+    }
 
     function prep_clean($ask){
         $stm = $this->conn->prepare($ask);
@@ -75,40 +71,41 @@ class User{
         return false;
     }
 
-    public function get_user_by_pw() {
+    public function read() {
         // Create query
-        $query = 'SELECT u.id, 
-                        u.first_name, 
-                        u.last_name, 
-                        u.email, 
-                        u.mobile,
-                        u.handle, 
-                        u.created_at
-                                    FROM ' . $this->table . ' u
-                                    WHERE
-                                      u.password = ?
-                                    LIMIT 0,1';
+        $query = 'SELECT * FROM ' . $this->table . ' u';
 
         // Prepare statement
         $stmt = $this->conn->prepare($query);
-
-        // Bind ID
-        $stmt->bindParam(1, $this->id);
-
         // Execute query
         $stmt->execute();
-
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // Set properties
-        $this->title = $row['title'];
-        $this->body = $row['body'];
-        $this->author = $row['author'];
-        $this->category_id = $row['category_id'];
-        $this->category_name = $row['category_name'];
+        return $stmt;
     }
 
-    function get_users(){
+    function if_email_exists(){
+        $query = ' SELECT * FROM ' . $this->table . ' u WHERE u.email = ? LIMIT 0,1';
+
+        $stmt = $this->prep_clean($query);
+
+        $stmt->bindParam(1, $this->email);
+
+        if($stmt->execute()) {
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $this->first_name = $row['first_name'];
+            $this->last_name = $row['last_name'];
+            $this->email = $row['email'];
+            $this->mobile = $row['mobile'];
+            $this->gender = $row['gender'];
+            $this->isadmin = $row['isadmin'];
+            $this->created_at = $row['created_at'];
+            $this->password = $row['password'];
+            $this->handle = $row['handle'];
+            return true;
+        }
+            return false;
+
     }
 
     function get_user_byID(){

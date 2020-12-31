@@ -1,9 +1,12 @@
 <?php
 include '../controllas/content.con.php';
 include '../controllas/art.con.php';
+//include '../controllas/login.con.php';
+//include '../controllas/signup.con.php';
+
  function render_header(){
      session_start();
-     if(isset($_SESSION['firstname'])){
+     if(isset($_SESSION['handle'])){
 
          echo'<head>
     <meta charset="utf-8">
@@ -21,7 +24,7 @@ include '../controllas/art.con.php';
     <div class = "d-flex justify-content-between container">
         <img class="ml-3 " style = "max-height: 5rem;" src="../images/imageonline-co-whitebackgroundremoved.PNG" alt="">
         <div class = "ml-auto d-inline-flex justify-content-around align-items-center">
-        <p class="my-1"> Hi ' . htmlspecialchars($_SESSION["username"]) . '</p><br>
+        <p class="my-1"> Hi ' . htmlspecialchars($_SESSION["handle"]) . '</p><br>
                 <form class="" action = "controlla/logout.con.php" method = "POST">
                     <button class = "form-control-sm mx-3 btn-sm btn-outline-secondary" type = "submit" name = "logout">Log Out</button>
                 </form>
@@ -62,6 +65,8 @@ include '../controllas/art.con.php';
 </header>';
      }
      else{
+         session_start();
+         $_SESSION['homepage'] = $_SERVER["REQUEST_URI"];
          echo'<html>
 <head>
     <meta charset="utf-8">
@@ -79,9 +84,9 @@ include '../controllas/art.con.php';
     <div class = "d-flex justify-content-between container">
         <img class="ml-3" style ="max-height: 5rem;" src="../images/imageonline-co-whitebackgroundremoved.PNG" alt="">
         <div class = "ml-auto d-inline-flex justify-content-around align-items-center">
-        <form class = "form-group form-inline d-l-block" action="controlla/login.con.php" method = "POST">
-                    <input class = "form-control-sm form-former" type = "hidden" name = "url_log" value = {$_SERVER["REQUEST_URI"]}/>
-                    <input class = "form-control-sm form-former  btn-outline-info" type = "name" placeholder = "Username/email" name = "uname_log" required/>
+        <form class = "form-group form-inline d-l-block" action="../controllas/login.con.php" method = "POST">
+                    <input class = "form-control-sm form-former" type = "hidden" name = "url_log" value = ' .$_SERVER["REQUEST_URI"] . '/>
+                    <input class = "form-control-sm form-former  btn-outline-info" type = "name" placeholder = "Username/email" name = "email_log" required/>
                     <input class = "form-control-sm form-former  btn-outline-info" type = "password" placeholder = "Password" name = "pw_log" required/>
                     <button class = "form-control-sm btn-sm btn-outline-secondary" type = "submit" name = "submit_log">LOG IN</button>
                 </form>
@@ -121,6 +126,7 @@ include '../controllas/art.con.php';
         </div>
     </nav>
 </header>';
+
      }
  }
 
@@ -230,16 +236,16 @@ include '../controllas/art.con.php';
      echo '
 <div class="container">
         <header style="margin-top: 2rem;" class ="container">
-            <h3 style ="margin-left: 1rem; font-size: 140%" >' . $article->title . '</h3>
-            <p style ="margin-left: 1rem; font-size: 80%">by ' . $article->author . '</p>
+            <h3 style ="margin-left: 1rem; font-size: 140%" >' . $article[0]->title . '</h3>
+            <p style ="margin-left: 1rem; font-size: 80%">by ' . $article[0]->author . '</p>
         </header>
         <article class="mx-auto col-sm-12">
             <figure class="animated fadeIn mx-auto col-sm-10">
-                <img class="mx-auto col-sm-12" src="' . $article->spread . '">
+                <img class="mx-auto col-sm-12" src="' . $article[0]->spread . '">
                 <figcaption class ="py-2" style ="margin-left: 1rem; font-size: 80%"><em>Photo Credit: insery here</em></figcaption>
             </figure>
             <p class="font-weight-light col-sm-10"style="margin: auto; margin-top: 2rem; font-size: 100%; font-family: \'Gupter\', serif;">
-                ' . $article->body . '
+                ' . $article[0]->body . '
             </p>
             <hr style="margin:auto;margin-top:3rem;" class="w-75">
         </article>';
@@ -248,6 +254,7 @@ include '../controllas/art.con.php';
 
 function render_comments(){
      // comment api call
+    session_start();
     $yarns = get_comments($_GET['id']);
      echo '<div id = "comment" class="well container">
                 <h4 style ="opacity: 0.45;" class="my-5" >C O M M E N T S..</h4>';
@@ -265,7 +272,7 @@ function render_comments(){
 
         }
 
-        if (isset($_SESSION['user_handle'])){
+        if (isset($_SESSION['handle'])){
             echo '<div id = "commentform" class= "py-5">
                     <form  style ="opacity: 0.85" method="POST" action="controlla/comment.con.php" class="w-100">
                         <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = "form-control form-control-sm" type = "hidden" placeholder = "Username" name = "url_comment" value ="<?php echo $_SERVER[\\\'REQUEST_URI\\\']?>"/>\';
@@ -279,7 +286,7 @@ function render_comments(){
                                 <input type="hidden" name="articleid" value="<?php echo $payload;?>" class="w-50" required/>
                             </div>
                             <div class="form-group">
-                                <label for ="comment">' . $_SESSION['user_handle'] . '</label>
+                                <label for ="comment">' . $_SESSION['handle'] . '</label>
                                 <textarea name="comment" class="w-100" rows="3"
                                 placeholder="leave a comment.." required></textarea>
                             </div>
