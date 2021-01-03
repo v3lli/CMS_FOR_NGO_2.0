@@ -83,6 +83,7 @@ class User{
     }
 
     function if_email_exists(){
+        //changed the question mark to :email, since you wanna limit the results to just one, LIMIT 1 should work perfectly for it, I guess
         $query = ' SELECT * FROM ' . $this->table . ' u WHERE u.email = :email LIMIT 1';
 
         $stmt = $this->prep_clean($query);

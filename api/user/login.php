@@ -32,7 +32,7 @@ if($user->if_email_exists()){
         $_SESSION['created_at'] = $user->created_at;
         $_SESSION['isadmin'] = $user->isadmin;
         $_SESSION['handle'] = $user->handle;
-        echo true;
+        echo json_encode($user);
         return $user;
     }
     else{

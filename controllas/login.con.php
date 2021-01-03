@@ -49,8 +49,10 @@ if(isset($_POST["Login"]))
         ]);
 
         if(curl_exec($ch)){
+            //the user object from the api login is stored in the result variable.
+            $result = json_decode(curl_exec($ch));
             header("Location:" . $cur_loc . "?alert=success");
-            }else{
+        }else{
             header("Location:" . $cur_loc . "?error=something_wrong");
         }
         curl_close($ch);
