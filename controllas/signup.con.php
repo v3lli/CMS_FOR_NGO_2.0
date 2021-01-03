@@ -34,5 +34,5 @@ if(isset($_POST["Signup"]))
             ]);
             $res = curl_exec($ch);
             curl_close($ch);
-            var_dump($res);
+            //var_dump($res);
         }}

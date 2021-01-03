@@ -2,24 +2,36 @@
 
 require "../config/Database.php";
 require "../models/User.php";
-session_start();
+
+
 if(isset($_POST["Login"]))
 {
-
-    $pw = $_POST["pass_log"];
-    $email = $_POST["email_log"];
+    if (isset($_POST['pass_log1']) && isset($_POST['email_log1'])){
+        $pw = $_POST["pass_log1"];
+        $email = $_POST["email_log1"];
+    }elseif (isset($_POST['pass_log2']) && isset($_POST['email_log2'])){
+        $pw = $_POST["pass_log2"];
+        $email = $_POST["email_log2"];
+    }elseif (isset($_POST['pass_log3']) && isset($_POST['email_log3'])){
+        $pw = $_POST["pass_log3"];
+        $email = $_POST["email_log3"];
+    }
     if(isset($_POST["url_log"]))
     {
-        $curloc = $_POST["url_log"];
+        $cur_loc = $_POST["url_log"];
     }
     else{
-        $curloc = $_SESSION['homepage'];
+        $cur_loc = '/RVIII/partials/home.php';
     }
-    if (empty($email) || empty($password))
+
+
+
+    if (empty($email) || empty($pw))
     {
-        header("Location:" . $curloc . "?error=emptyfields");
+        header("Location:" . $cur_loc . "?error=emptyfields");
         exit();
-    }else {
+    }else{
+
         $data = array(
             'password' => $pw,
             'email' => $email
@@ -29,18 +41,22 @@ if(isset($_POST["Login"]))
         $url = 'http://localhost:8888/rviii/api/user/login.php';
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch,CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Access-Control-Allow-Origin: *',
             'Content-Type: application/json'
         ]);
+
         if(curl_exec($ch)){
-            header("Location:" . $curloc);
-            }
+            header("Location:" . $cur_loc);
+            }else{
+            header("Location:" . $cur_loc . "?error=something_wrong");
         }
         curl_close($ch);
     }
+
+}
 
 
 

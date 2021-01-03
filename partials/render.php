@@ -1,8 +1,6 @@
 <?php
 include '../controllas/content.con.php';
 include '../controllas/art.con.php';
-//include '../controllas/login.con.php';
-//include '../controllas/signup.con.php';
 
  function render_header(){
      session_start();
@@ -14,9 +12,9 @@ include '../controllas/art.con.php';
     <title>Real Visionaries Initiative</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" media="screen" href="../styles/main.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
@@ -24,7 +22,7 @@ include '../controllas/art.con.php';
     <div class = "d-flex justify-content-between container">
         <img class="ml-3 " style = "max-height: 5rem;" src="../images/imageonline-co-whitebackgroundremoved.PNG" alt="">
         <div class = "ml-auto d-inline-flex justify-content-around align-items-center">
-        <p class="my-1"> Hi ' . htmlspecialchars($_SESSION["handle"]) . '</p><br>
+        <p class="my-1"> Hi ' . $_SESSION["handle"] . '</p><br>
                 <form class="" action = "controlla/logout.con.php" method = "POST">
                     <button class = "form-control-sm mx-3 btn-sm btn-outline-secondary" type = "submit" name = "logout">Log Out</button>
                 </form>
@@ -65,8 +63,7 @@ include '../controllas/art.con.php';
 </header>';
      }
      else{
-         session_start();
-         $_SESSION['homepage'] = $_SERVER["REQUEST_URI"];
+
          echo'<html>
 <head>
     <meta charset="utf-8">
@@ -74,9 +71,9 @@ include '../controllas/art.con.php';
     <title>Real Visionaries Initiative</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" media="screen" href="../styles/main.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
@@ -85,17 +82,16 @@ include '../controllas/art.con.php';
         <img class="ml-3" style ="max-height: 5rem;" src="../images/imageonline-co-whitebackgroundremoved.PNG" alt="">
         <div class = "ml-auto d-inline-flex justify-content-around align-items-center">
         <form class = "form-group form-inline d-l-block" action="../controllas/login.con.php" method = "POST">
-                    <input class = "form-control-sm form-former" type = "hidden" name = "url_log" value = ' .$_SERVER["REQUEST_URI"] . '/>
-                    <input class = "form-control-sm form-former  btn-outline-info" type = "name" placeholder = "Username/email" name = "email_log" required/>
-                    <input class = "form-control-sm form-former  btn-outline-info" type = "password" placeholder = "Password" name = "pw_log" required/>
-                    <button class = "form-control-sm btn-sm btn-outline-secondary" type = "submit" name = "submit_log">LOG IN</button>
+                    <input class = "form-control-sm form-former" type = "hidden" name = "url_log" value ="' . $_SERVER["REQUEST_URI"] . '"/>
+                    <input class = "form-control-sm form-former  btn-outline-info" type = "name" placeholder = "Username/email" name = "email_log2" required/>
+                    <input class = "form-control-sm form-former  btn-outline-info" type = "password" placeholder = "Password" name = "pass_log2" required/>
+                    <button class = "form-control-sm btn-sm btn-outline-secondary" type = "submit" name = "Login">LOG IN</button>
                 </form>
 </div>
     </div>
     <nav class="ml-4 navbar navbar-light navbar-expand-lg bg-transparent navbar-custom">
         <!-- Brand -->
         <a class="navbar-brand" href="#">R V I</a>
-
         <!-- Toggler/collapsibe Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -148,6 +144,7 @@ include '../controllas/art.con.php';
 
  function render_media(){
      echo 'rest of the shit goes here';
+     echo $_SESSION['handle'];
  }
 
  function render_footer(){
@@ -222,8 +219,8 @@ include '../controllas/art.con.php';
         </ul>
         <div class="ml-auto mt-3">© 2019 R.V.I.</div>
       </footer>
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src = "../scripts/jquery-3.5.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js" integrity="sha512-BmM0/BQlqh02wuK5Gz9yrbe7VyIVwOzD1o40yi1IsTjriX/NGF37NyXHfmFzIlMmoSIBXgqDiG1VNU6kB5dBbA==" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>  
       <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
       <script src ="../scripts/scripts.js"></script>
@@ -248,7 +245,8 @@ include '../controllas/art.con.php';
                 ' . $article[0]->body . '
             </p>
             <hr style="margin:auto;margin-top:3rem;" class="w-75">
-        </article>';
+        </article>
+        </div>';
         render_comments();
 }
 
@@ -298,11 +296,11 @@ function render_comments(){
             echo '
                 <div class="py-3">
                     <h3>Sign in to leave a comment..</h3>
-                    <form class = "form-inline" action="controlla/login.con.php" method = "POST">
-                    <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = " form-control form-control-sm" type = "hidden" placeholder = "Username" name = "url_log" value = " ' .$_SERVER["REQUEST_URI"] . '"/>  
-                          <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = " form-control form-control-sm" type = "name" placeholder = "Username" name = "uname_log" required/>
-                          <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = "form-control form-control-sm" type = "password" placeholder = "Password" name = "pw_log" required/>
-                          <button style = "height:1.5rem; width: 3rem; font-size:0.6rem; margin-left:0.2rem;" class = "form-control form-control-sm" type = "submit" name = "submit_log">LOG IN</button>
+                    <form class = "form-inline" action="../controllas/login.con.php" method = "POST">
+                    <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = " form-control form-control-sm" type = "hidden" placeholder = "Username" name = "url_log" value = "' .$_SERVER["REQUEST_URI"] . '"/>  
+                          <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = " form-control form-control-sm" type = "name" placeholder = "email" name = "email_log3" required/>
+                          <input style = "height:1.5rem; width: 6.5rem; margin-left:0.2rem; " class = "form-control form-control-sm" type = "password" placeholder = "Password" name = "pass_log3" required/>
+                          <button style = "height:1.5rem; width: 3rem; font-size:0.6rem; margin-left:0.2rem;" class = "form-control form-control-sm" type = "submit" name = "Login">LOG IN</button>
                     </form>
                     <h6>Or <a style = "align-self: center; height:3rem; width: 3rem; font-size:1.5rem; margin-left:8px;"href = "loginform.php">Sign up</a> if you havent done so already..</h6>
             </div>

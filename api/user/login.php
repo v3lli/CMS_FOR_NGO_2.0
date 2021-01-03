@@ -13,14 +13,12 @@ include_once '../../models/User.php';
 $database = new Database();
 $db = $database->connect();
 
-//post instance
 $user = new User($db);
 
 // Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
-
 $user->email = $data->email;
-
+die(var_dump($data));
 if($user->if_email_exists()){
     if ($user->password == $data->password){
         session_start();

@@ -22,12 +22,12 @@
         </div>
         <div class="form-inner">
             <div class="form-inner">
-                <form action="../controllas/login.con.php" class="login">
+                <form action="../controllas/login.con.php" method="post" class="login">
                     <div class="field">
-                        <input name="email_log" type="text" placeholder="Email Address" required>
+                        <input name="email_log1" type="text" placeholder="Email Address" required>
                     </div>
                     <div class="field">
-                        <input name="pass_log" type="password" placeholder="Password" required>
+                        <input name="pass_log1" type="password" placeholder="Password" required>
                     </div>
                     <div class="pass-link"><a href="#">Forgot password?</a></div>
                     <div class="field btn">
