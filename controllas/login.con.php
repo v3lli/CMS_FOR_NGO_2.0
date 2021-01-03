@@ -49,7 +49,7 @@ if(isset($_POST["Login"]))
         ]);
 
         if(curl_exec($ch)){
-            header("Location:" . $cur_loc);
+            header("Location:" . $cur_loc . "?alert=success");
             }else{
             header("Location:" . $cur_loc . "?error=something_wrong");
         }

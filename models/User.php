@@ -83,11 +83,11 @@ class User{
     }
 
     function if_email_exists(){
-        $query = ' SELECT * FROM ' . $this->table . ' u WHERE u.email = ? OR LIMIT 0,1';
+        $query = ' SELECT * FROM ' . $this->table . ' u WHERE u.email = :email LIMIT 1';
 
         $stmt = $this->prep_clean($query);
 
-        $stmt->bindParam(1, $this->email);
+        $stmt->bindParam(':email', $this->email);
 
         if($stmt->execute()) {
 
